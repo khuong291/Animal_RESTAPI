@@ -2,8 +2,13 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const animalsRoutes = require('./api/routes/animals');
+
+mongoose.connect('mongodb://khuong291:' +
+                process.env.MONGO_ATLAS_PW +
+                '@animal-shard-00-00-nbagb.mongodb.net:27017,animal-shard-00-01-nbagb.mongodb.net:27017,animal-shard-00-02-nbagb.mongodb.net:27017/test?ssl=true&replicaSet=Animal-shard-0&authSource=admin')
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({
