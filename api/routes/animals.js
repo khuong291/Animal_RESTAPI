@@ -6,9 +6,20 @@ const Animal = require('../models/animal');
 
 router.get('/', (req, res, next) => {
   Animal.find()
+    .select('name description _id')
     .exec()
     .then(docs => {
-      res.status(200).json(docs);
+      const response = {
+        count: docs.length,
+        animals: docs.map(doc => {
+          return {
+            name: doc.name,
+            description: doc.description,
+            _id: doc._id,
+          };
+        }),
+      };
+      res.status(200).json(response);
     })
     .catch(err => {
       console.log(err);
